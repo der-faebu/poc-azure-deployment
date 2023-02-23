@@ -1,6 +1,9 @@
 on: [push]
 name: Test variable substitution.
 
+permissions:
+      id-token: write
+      contents: read
 
 jobs:
   build:
