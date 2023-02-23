@@ -37,5 +37,6 @@ $settings = [ordered]@{
   ExportDirectory       = 'C:\tmp\DSC_Export\<CustomerId>'
 }
 Write-Host 'Expanding Settings'
+Write-Host $settings
 Expand-Config -InputObject $settings
 Write-Output $settings

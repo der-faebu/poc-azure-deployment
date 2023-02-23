@@ -11,10 +11,10 @@ jobs:
       - name: run PowerShell
         shell: pwsh
         run: M365DSC/TenantExport/TenantConfig.ps1
-        env: 
+        env:
           CUSTOMER_NAME: ${{env.CUSTOMER_NAME}}
           CUSTOMER_ID: ${{env.CUSTOMER_ID}}
           TENANT_ID": ${{env.TENANT_ID}}
-          APPLICATION_NAME: ${{env.APPLICATION_NAME}}
-          APPLICATION_ID: ${{env.APPLICATION_ID}}
-          CERTIFICATE_THUMBPRINT: ${{env.CERTIFICATE_THUMBPRINT}}
+          APPLICATION_NAME: ${{secrets.APPLICATION_NAME}}
+          APPLICATION_ID: ${{secrets.APPLICATION_ID}}
+          CERTIFICATE_THUMBPRINT: ${{secrets.CERTIFICATE_THUMBPRINT}}
