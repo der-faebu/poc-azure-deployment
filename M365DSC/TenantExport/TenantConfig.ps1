@@ -36,7 +36,9 @@ $settings = [ordered]@{
   }
   ExportDirectory       = 'C:\tmp\DSC_Export\<CustomerId>'
 }
-Write-Host 'Expanding Settings'
-Write-Host $settings
-Expand-Config -InputObject $settings
-Write-Output $settings
+Write-Host "CustomerName  = $settings.CustomerName"
+Write-Host "CustomerId  = $settings.CustomerId"
+Write-Host "ApplicationName  = $settings.ApplicationName"
+Write-Host "TenantId  = $settings.TenantId"# cannot be a guid
+Write-Host "ApplicationId  = $settings.ApplicationId"
+Write-Host "CertificateThumbprint  = $settings.CertificateThumbprint"
