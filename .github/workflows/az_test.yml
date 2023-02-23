@@ -1,15 +1,16 @@
 on: [push]
 name: variable substitution in json
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@2
+        uses: actions/checkout@v2
       - name: Run variable substitution
-        uses: microsoft/variable-substitution@1
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: M365DSC/TenantExport/TenantConfig.ps1
       - name: run PowerShell
         shell: pwsh
         run: M365DSC/TenantExport/TenantConfig.ps1
