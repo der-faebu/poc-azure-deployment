@@ -5,7 +5,8 @@ $settings = [ordered]@{
   CustomerName          = $env:CUSTOMER_NAME
   CustomerId            = $env:CUSTOMER_ID
   ApplicationName       = $env:APPLICATION_NAME
-  TenantId              = $env:TENANT_ID
+  TenantId              = $env:TENANT_ID # cannot be a guid
+  # will only be known after running SetPermissions
   ApplicationId         = $env:APPLICATION_ID
   CertificateThumbprint = $env:CERTIFICATE_THUMBPRINT
   CertificatePfxPath    = "$PSScriptRoot\certificates\<CustomerId>_m365dsc_sp.pfx"
@@ -35,9 +36,6 @@ $settings = [ordered]@{
   }
   ExportDirectory       = 'C:\tmp\DSC_Export\<CustomerId>'
 }
-Write-Host "CustomerName  = $($settings.CustomerName)"
-Write-Host "CustomerId  = $($settings.CustomerId)"
-Write-Host "ApplicationName  = $($settings.ApplicationName)"
-Write-Host "TenantId  = $($settings.TenantId)"# cannot be a guid
-Write-Host "ApplicationId  = $($settings.ApplicationId)"
-Write-Host "CertificateThumbprint  = $($settings.CertificateThumbprint)"
+Write-Host 'Expanding Settings'
+Expand-Config -InputObject $settings
+Write-Output $settings
