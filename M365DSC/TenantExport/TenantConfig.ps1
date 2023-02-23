@@ -5,8 +5,7 @@ $settings = [ordered]@{
   CustomerName          = $env:CUSTOMER_NAME
   CustomerId            = $env:CUSTOMER_ID
   ApplicationName       = $env:APPLICATION_NAME
-  TenantId              = $env:TENANT_ID # cannot be a guid
-  # will only be known after running SetPermissions
+  TenantId              = $env:TENANT_ID
   ApplicationId         = $env:APPLICATION_ID
   CertificateThumbprint = $env:CERTIFICATE_THUMBPRINT
   CertificatePfxPath    = "$PSScriptRoot\certificates\<CustomerId>_m365dsc_sp.pfx"
