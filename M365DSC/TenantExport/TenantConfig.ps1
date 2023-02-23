@@ -36,9 +36,9 @@ $settings = [ordered]@{
   }
   ExportDirectory       = 'C:\tmp\DSC_Export\<CustomerId>'
 }
-Write-Host "CustomerName  = $settings.CustomerName"
-Write-Host "CustomerId  = $settings.CustomerId"
-Write-Host "ApplicationName  = $settings.ApplicationName"
-Write-Host "TenantId  = $settings.TenantId"# cannot be a guid
-Write-Host "ApplicationId  = $settings.ApplicationId"
-Write-Host "CertificateThumbprint  = $settings.CertificateThumbprint"
+Write-Host "CustomerName  = $($settings.CustomerName)"
+Write-Host "CustomerId  = $($settings.CustomerId)"
+Write-Host "ApplicationName  = $($settings.ApplicationName)"
+Write-Host "TenantId  = $($settings.TenantId)"# cannot be a guid
+Write-Host "ApplicationId  = $($settings.ApplicationId)"
+Write-Host "CertificateThumbprint  = $($settings.CertificateThumbprint)"
