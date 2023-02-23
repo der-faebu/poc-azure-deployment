@@ -13,18 +13,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: run PowerShell
-        shell: powershell
-        run: M365DSC/TenantExport/TenantConfig.ps1
-        env:
-          CUSTOMER_NAME: ${{vars.CUSTOMER_NAME}}
-          CUSTOMER_ID: ${{vars.CUSTOMER_ID}}
-          TENANT_ID: ${{vars.TENANT_ID}}
-          APPLICATION_NAME: ${{vars.APPLICATION_NAME}}
-          APPLICATION_ID: ${{secrets.APPLICATION_ID}}
-          CERTIFICATE_THUMBPRINT: ${{secrets.CERTIFICATE_THUMBPRINT}}
-
-      - name: "Az CLI login"
+      - name: Login in to Azure CLI
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -32,8 +21,13 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
-      - name: "Run az commands"
-        run: |
-          az account show
-          az group list
-          pwd
+      - name: Set Permissions
+        shell: powershell
+        run: M365DSC/TenantExport/SetPermissions.ps1
+        env:
+          CUSTOMER_NAME: ${{vars.CUSTOMER_NAME}}
+          CUSTOMER_ID: ${{vars.CUSTOMER_ID}}
+          TENANT_ID: ${{vars.TENANT_ID}}
+          APPLICATION_NAME: ${{vars.APPLICATION_NAME}}
+          APPLICATION_ID: ${{secrets.APPLICATION_ID}}
+          CERTIFICATE_THUMBPRINT: ${{secrets.CERTIFICATE_THUMBPRINT}}
