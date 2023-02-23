@@ -1,0 +1,3 @@
+*.pfx
+*.cer
+tenant_out/
