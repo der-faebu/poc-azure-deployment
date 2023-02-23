@@ -1,8 +1,10 @@
 on: [push]
 name: Test variable substitution.
 
+
 jobs:
   build:
+    environment: test
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
