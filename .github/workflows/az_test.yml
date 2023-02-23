@@ -14,9 +14,9 @@ jobs:
         shell: pwsh
         run: M365DSC/TenantExport/TenantConfig.ps1
         env:
-          CUSTOMER_NAME: ${{env:$env:CUSTOMER_NAME}}
-          CUSTOMER_ID: ${{env:$env:CUSTOMER_ID}}
-          APPLICATION_NAME: ${{secrets:$env:APPLICATION_NAME}}
-          TENANT_ID: ${{env:$env:TENANT_ID}}
-          APPLICATION_ID: ${{secrets:$env:APPLICATION_ID}}
-          CERTIFICATE_THUMBPRINT: ${{secrets:$env:CERTIFICATE_THUMBPRINT}}
+          CUSTOMER_NAME: ${{vars.CUSTOMER_NAME}}
+          CUSTOMER_ID: ${{vars.CUSTOMER_ID}}
+          APPLICATION_NAME: ${{secrets.APPLICATION_NAME}}
+          TENANT_ID: ${{varsTENANT_ID}}
+          APPLICATION_ID: ${{secrets.APPLICATION_ID}}
+          CERTIFICATE_THUMBPRINT: ${{secrets.CERTIFICATE_THUMBPRINT}}
