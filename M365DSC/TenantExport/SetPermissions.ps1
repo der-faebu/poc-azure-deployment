@@ -1,13 +1,13 @@
 Import-Module Microsoft365DSC -Force
-$config = & "$PSScriptRoot\TenantConfig.ps1"
-Write-Output $config
+$CONFIG = & "$PSScriptRoot\TenantConfig.ps1"
+Write-Output $CONFIG
 
 az login --identity
 
 $permsToApply = @()
 $necessaryPermissions = @()
 
-foreach ($resource in $config.Resources.GetEnumerator()) {
+foreach ($resource in $CONFIG.Resources.GetEnumerator()) {
   $necessaryPermissions += $resource.Value
 }
 
@@ -22,34 +22,34 @@ foreach ($perm in $totalPermissions) {
 }
 $thumbprint = ''
 # Test if cer file is present
-if (Test-Path $config.CertificateCerPath) {
+if (Test-Path $CONFIG.CertificateCerPath) {
   #if so, test if is in the local storage
-  $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 $config.CertificateCerPath
+  $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 $CONFIG.CertificateCerPath
   $thumbprint = $cert.Thumbprint
 
   $storeCert = Get-ChildItem 'Cert:\LocalMachine\My' | Where-Object Thumbprint -EQ $thumbprint
   if ($null -eq $storeCert) {
     Throw "A cer file is present, however the corresponding private key was not found in the local certificate store. `
-    Please import it or delete de cer file $($config.CertificateCerPath) and try again."
+    Please import it or delete de cer file $($CONFIG.CertificateCerPath) and try again."
   }
 }
 
 else {
   Write-Host 'No certificate found. Creating self-signed cert....'
-  $cert = New-SelfSignedCertificate -Subject "cn=$($env:APPLICATION_NAME)_auth" `
+  $cert = New-SelfSignedCertificate -Subject "cn=$($CONFIG.ApplicationName)_auth" `
     -CertStoreLocation 'Cert:\LocalMachine\My' `
     -NotAfter (Get-Date).AddYears(1) `
     -KeySpec KeyExchange
 
-  $cert | Export-Certificate -Type cer -FilePath $config.CertificateCerPath -Force 
+  $cert | Export-Certificate -Type cer -FilePath $CONFIG.CertificateCerPath -Force 
   $thumbprint = $cert.Thumbprint
 }
 
 Write-Host 'Updating permissions...'
-Update-M365DSCAzureAdApplication -ApplicationName $env:APPLICATION_NAME `
+Update-M365DSCAzureAdApplication -ApplicationName $CONFIG.ApplicationName `
   -Permissions $permsToApply `
   -AdminConsent `
-  -CertificatePath $config.CertificateCerPath `
+  -CertificatePath $CONFIG.CertificateCerPath `
   -Type Certificate
 
-Write-Host "App ID: $((Get-AzADApplication -DisplayName $config.ApplicationName).AppId)" 
+Write-Host "App ID: $((Get-AzADApplication -DisplayName $CONFIG.ApplicationName).AppId)" 

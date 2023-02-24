@@ -6,22 +6,22 @@ param(
 )
 
 Import-Module Microsoft365DSC -Force
-$env:CONFIG = & "$PSScriptRoot\TenantConfig.ps1"
-$globalResources = $env:CONFIG.Resources
+$CONFIG = & "$PSScriptRoot\TenantConfig.ps1"
+$globalResources = $CONFIG.Resources
 if ($null -eq $Resources) {
-  $Resources = $env:CONFIG.Resources.GetEnumerator().Name
+  $Resources = $CONFIG.Resources.GetEnumerator().Name
 }
-Connect-MicrosoftTeams -TenantId $env:CONFIG.TenantId `
-  -ApplicationId $env:CONFIG.ApplicationId `
-  -CertificateThumbprint $env:CONFIG.CertificateThumbprint
+Connect-MicrosoftTeams -TenantId $CONFIG.TenantId `
+  -ApplicationId $CONFIG.ApplicationId `
+  -CertificateThumbprint $CONFIG.CertificateThumbprint
 
 foreach ($resource in $Resources) {
   # Write-Host "Exporting resource $($resource):"
   # Write-Host "Components: $($globalResources[$resource])"
   Export-M365DSCConfiguration -Components $globalResources[$resource] `
-    -Path $env:CONFIG.ExportDirectory `
+    -Path $CONFIG.ExportDirectory `
     -FileName "$($resource).ps1" `
-    -ApplicationId $env:CONFIG.ApplicationId  `
-    -CertificateThumbprint $env:CONFIG.CertificateThumbprint `
-    -TenantId $env:CONFIG.TenantId
+    -ApplicationId $CONFIG.ApplicationId  `
+    -CertificateThumbprint $CONFIG.CertificateThumbprint `
+    -TenantId $CONFIG.TenantId
 }
