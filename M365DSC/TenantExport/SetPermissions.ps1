@@ -1,7 +1,8 @@
 Import-Module Microsoft365DSC -Force
 $config = & "$PSScriptRoot\TenantConfig.ps1"
 Write-Output $config
-Connect-AzAccount -Tenant $env:TENANT_ID
+
+az login --identity
 
 $permsToApply = @()
 $necessaryPermissions = @()
