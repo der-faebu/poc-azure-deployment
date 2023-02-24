@@ -13,14 +13,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      # - name: Login in to Azure CLI
-      #   uses: azure/login@v1
-      #   with:
-      #     identity: true
-      #     # client-id: ${{ secrets.AZURE_CLIENT_ID }}
-      #     # tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-      #     # subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      #     enable-AzPSSession: true
+      - name: Login in to Azure CLI
+        shell: powershell
+        run: az login --identity
 
       - name: Set Permissions
         shell: powershell
