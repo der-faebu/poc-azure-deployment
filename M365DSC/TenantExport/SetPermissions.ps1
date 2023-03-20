@@ -20,36 +20,11 @@ foreach ($perm in $totalPermissions) {
   }
   $permsToApply += $permObj
 }
-$thumbprint = ''
-# Test if cer file is present
-if (Test-Path $CONFIG.CertificateCerPath) {
-  #if so, test if is in the local storage
-  $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 $CONFIG.CertificateCerPath
-  $thumbprint = $cert.Thumbprint
-
-  $storeCert = Get-ChildItem 'Cert:\CurrentUser\My' | Where-Object Thumbprint -EQ $thumbprint
-  if ($null -eq $storeCert) {
-    Throw "A cer file is present, however the corresponding private key was not found in the local certificate store. `
-    Please import it or delete de cer file $($CONFIG.CertificateCerPath) and try again."
-  }
-}
-
-else {
-  Write-Host 'No certificate found. Creating self-signed cert....'
-  $cert = New-SelfSignedCertificate -Subject "cn=$($CONFIG.ApplicationName)_auth" `
-    -CertStoreLocation 'Cert:\CurrentUser\My' `
-    -NotAfter (Get-Date).AddYears(1) `
-    -KeySpec KeyExchange
-
-  $cert | Export-Certificate -Type cer -FilePath $CONFIG.CertificateCerPath -Force 
-  $thumbprint = $cert.Thumbprint
-}
+$thumbprint = (Invoke-Command {az keyvault certificate list --vault-name mcr5edeployment --output json | ConvertFrom-Json}).x509ThumbprintHex
 
 Write-Host 'Updating permissions...'
 Update-M365DSCAzureAdApplication -ApplicationName $CONFIG.ApplicationName `
   -Permissions $permsToApply `
-  -AdminConsent `
-  -CertificatePath $CONFIG.CertificateCerPath `
-  -Type Certificate
+  -AdminConsent
 
 Write-Host "App ID: $((Get-AzADApplication -DisplayName $CONFIG.ApplicationName).AppId)" 
