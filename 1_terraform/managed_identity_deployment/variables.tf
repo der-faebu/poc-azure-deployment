@@ -2,13 +2,15 @@ variable "tenant_id" {
 }
 variable "subscription_id" {
 }
-
+variable "customer_name" {
+}
 variable "global_settings" {
   type = object({
     tags = map(any)
   })
 }
-
+variable "customer_id" {
+}
 variable "resource_group_location" {
   type        = string
   default     = "eu-west"
@@ -31,6 +33,8 @@ variable "vm_name" {
 }
 variable "vm_size" {
   default = "Standard_B2s"
+}
+variable "vm_admin_name" {
 }
 variable "vm_admin_password" {
 }

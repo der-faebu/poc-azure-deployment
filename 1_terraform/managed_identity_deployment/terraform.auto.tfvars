@@ -2,6 +2,8 @@
 #tenant
 subscription_id = "ca40ebab-e130-4eb4-aa90-e52a2cc4bc9e"
 tenant_id       = "76eaa1e5-b368-4d41-bf0a-b2078e6eb434"
+customer_name   = "Perigoncloud Customer 1"
+customer_id     = "perigoncloud-cust1.ch"
 # global settings
 global_settings = {
   tags = {
@@ -25,6 +27,7 @@ domain_name_label = "perigon-cust1-test"
 # vm
 vm_name                  = "win11-gh-runner"
 vm_size                  = "Standard_B2s"
+vm_admin_name            = "github-runner"
 vm_admin_password        = "P@55w0Rd!"
 vm_data_disk_delete_flag = true
 vm_os_disk_delete_flag   = true
