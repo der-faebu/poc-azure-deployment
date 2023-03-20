@@ -20,7 +20,12 @@ variable "vm_data_disk_delete_flag" {
 variable "network_security_group_id" {
   default = ""
 }
+
 variable "ip_configuration" {
+  default = {
+    private_ip_address_allocation = "Dynamic"
+    private_ip_address            = ""
+  }
 }
 variable "publisher" {
 }
@@ -44,15 +49,9 @@ variable "activity_tag" {
 }
 variable "admin_password" {
 }
-variable "windows_os_profile_config" {
-  default = {
-    enable_automatic_upgrades = true
-  }
-}
-variable "linux_os_profile_config" {
+variable "windows_config" {
   default = {
     disable_password_authentication = false
+    ssh_keys                        = []
   }
 }
-
-

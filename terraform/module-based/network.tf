@@ -10,6 +10,15 @@ module "network" {
   tags                = var.global_settings.tags
   depends_on          = [azurerm_resource_group.rg]
 }
+
+module "public_ip" {
+  source              = "Azure/public_ip/azurerm"
+  name                = "${var.resource_group_name}_public_ip"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+
+}
 # Create NSG
 
 module "network-security-group" {
