@@ -35,6 +35,11 @@ $settings = [ordered]@{
       'TeamsVoiceRoutingPolicy', 'TeamsWorkloadPolicy') 
   }
   ExportDirectory       = 'C:\tmp\DSC_Export\<CustomerId>'
+
+  ## todo: install or update all required modules
+  RequiredModules = @(
+    'Az.Resources'
+  )
 }
 Write-Host 'Expanding Settings'
 Expand-Config -InputObject $settings
