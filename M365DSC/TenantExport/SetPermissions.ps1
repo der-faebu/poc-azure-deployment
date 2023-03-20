@@ -27,7 +27,7 @@ if (Test-Path $CONFIG.CertificateCerPath) {
   $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 $CONFIG.CertificateCerPath
   $thumbprint = $cert.Thumbprint
 
-  $storeCert = Get-ChildItem 'Cert:\LocalMachine\My' | Where-Object Thumbprint -EQ $thumbprint
+  $storeCert = Get-ChildItem 'Cert:\CurrentUser\My' | Where-Object Thumbprint -EQ $thumbprint
   if ($null -eq $storeCert) {
     Throw "A cer file is present, however the corresponding private key was not found in the local certificate store. `
     Please import it or delete de cer file $($CONFIG.CertificateCerPath) and try again."
