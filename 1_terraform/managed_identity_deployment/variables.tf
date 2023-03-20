@@ -11,6 +11,8 @@ variable "global_settings" {
 }
 variable "customer_id" {
 }
+
+# rg
 variable "resource_group_location" {
   type        = string
   default     = "eu-west"
@@ -20,6 +22,11 @@ variable "resource_group_location_short" {
   type        = string
   default     = "euw"
   description = "Short notation of the location of the resource group."
+}
+
+variable "resource_group_tags" {
+  type        = map(any)
+  description = "Resource group specific tags"
 }
 
 variable "resource_group_name" {

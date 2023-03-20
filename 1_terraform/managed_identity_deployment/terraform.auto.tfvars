@@ -13,6 +13,7 @@ global_settings = {
     environment    = "dev"
     maintainer     = "terraform-maintained"
     version        = "0.1"
+    createdBy      = "gfa"
   }
 }
 
@@ -20,7 +21,8 @@ global_settings = {
 resource_group_location       = "West Europe"
 resource_group_location_short = "westeurope"
 resource_group_name           = "rg-m365-deployment"
-
+resource_group_tags = {
+}
 # network
 domain_name_label = "perigon-cust1-test"
 
@@ -43,5 +45,6 @@ vm_tags = {
 key_vault_name = "deployment"
 key_vault_sku  = "Standard"
 key_vault_tags = {
-  usage = "deployment"
+  usage = "m365DSC_sp_auth"
 }
+

@@ -11,7 +11,25 @@ resource "azurerm_key_vault" "az_managed_identity_key_vault" {
   ]
 }
 
-resource "azurerm_key_vault_access_policy" "az_managed_identity_key_vault_access_policy_managed_identity" {
+resource "azurerm_key_vault_access_policy" "az_global_admin_key_vault_access_policy" {
+  key_vault_id = azurerm_key_vault.az_managed_identity_key_vault.id
+  tenant_id    = azurerm_key_vault.az_managed_identity_key_vault.tenant_id
+  object_id    = data.azuread_client_config.current.object_id
+
+  key_permissions = [
+    "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore",
+  ]
+
+  secret_permissions = [
+    "Get", "List", "Delete", "Recover", "Backup", "Restore", "Set",
+  ]
+
+  certificate_permissions = [
+    "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "DeleteIssuers", "GetIssuers", "ListIssuers", "ManageContacts", "ManageIssuers", "SetIssuers",
+  ]
+}
+
+resource "azurerm_key_vault_access_policy" "az_key_vault_access_policy_managed_identity" {
   depends_on = [
     azurerm_virtual_machine.deployment-win11
   ]
@@ -31,3 +49,4 @@ resource "azurerm_key_vault_access_policy" "az_managed_identity_key_vault_access
     "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "DeleteIssuers", "GetIssuers", "ListIssuers", "ManageContacts", "ManageIssuers", "SetIssuers",
   ]
 }
+
