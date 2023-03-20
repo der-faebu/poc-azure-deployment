@@ -20,7 +20,8 @@ foreach ($perm in $totalPermissions) {
   }
   $permsToApply += $permObj
 }
-$thumbprint = (Invoke-Command {az keyvault certificate list --vault-name mcr5edeployment --output json | ConvertFrom-Json}).x509ThumbprintHex
+$permsToApply | ConvertTo-Json -Depth 10 | Out-File -FilePath $PSScriptRoot\permissions.json
+$thumbprint = (Invoke-Command { az keyvault certificate list --vault-name mcr5edeployment --output json | ConvertFrom-Json }).x509ThumbprintHex
 
 Write-Host 'Updating permissions...'
 Update-M365DSCAzureAdApplication -ApplicationName $CONFIG.ApplicationName `
