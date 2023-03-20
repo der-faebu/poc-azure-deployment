@@ -37,7 +37,7 @@ if (Test-Path $CONFIG.CertificateCerPath) {
 else {
   Write-Host 'No certificate found. Creating self-signed cert....'
   $cert = New-SelfSignedCertificate -Subject "cn=$($CONFIG.ApplicationName)_auth" `
-    -CertStoreLocation 'Cert:\LocalMachine\My' `
+    -CertStoreLocation 'Cert:\CurrentUser\My' `
     -NotAfter (Get-Date).AddYears(1) `
     -KeySpec KeyExchange
 
