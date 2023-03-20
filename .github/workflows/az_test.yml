@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   PowerShell:
-    environment: test
+    environment: perigoncloud-cust1.ch
     runs-on: self-hosted
     steps:
       - name: Check out repository
